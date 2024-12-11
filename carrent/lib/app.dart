@@ -1,14 +1,25 @@
-import 'package:flutter/material.dart';
-import 'user_view/home.dart';
 
-class Myapp extends StatelessWidget {
-  const Myapp({super.key});
+
+import 'package:carrent/auth/login.dart';
+import 'package:carrent/auth/register.dart';
+import 'package:carrent/auth/reset.dart';
+import 'package:carrent/user_view/home.dart';
+import 'package:flutter/material.dart';
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserHome(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const ScreenPanel(), // Main Screen
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/forgot': (context) => const ForgotPasswordScreen(),
+      },
     );
   }
 }
