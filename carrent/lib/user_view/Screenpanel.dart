@@ -12,12 +12,12 @@ class ScreenPanel extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/car_rent_bg.jpg'), // Add image in assets
+                image: AssetImage('assets/images/a.webp'), // Update the image path
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          // Centered Content
+          // Centered Content (only title now)
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -27,31 +27,29 @@ class ScreenPanel extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color.fromRGBO(211, 150, 50, 1),
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD39632),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Login'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD39632),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Register'),
-                ),
               ],
+            ),
+          ),
+          // Positioned "Get Started" Button at the Bottom
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD39632),
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text('Get Started'),
+              ),
             ),
           ),
         ],
