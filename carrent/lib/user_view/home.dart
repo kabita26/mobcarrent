@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: const Color(0xFFD39632),
+        color: const Color.fromRGBO(211, 150, 50, 1),
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),

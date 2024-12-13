@@ -17,18 +17,34 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white, // Set background color to white
       appBar: AppBar(
         title: const Text('Login'),
         backgroundColor: const Color(0xFFD39632),
       ),
       body: Stack(
         children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/a.webp'),
-                fit: BoxFit.cover,
+          Positioned(
+            top: 10, // Adjust position
+            right: 30,
+            child: Container(
+              width: 250, // Adjust width
+              height: 250, // Adjust height
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage("assets/images/login.png"), // Replace with your image path
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20), // Rounded corners
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(66, 192, 200, 120), // Shadow color
+                    blurRadius: 10,
+                    offset: const Offset(2, 2), // Shadow offset
+                  ),
+                ],
               ),
             ),
           ),
@@ -102,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: const Text('Login'),
                       ),
-                     // Row for 'Forgot Password?' and 'Register' buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -112,17 +127,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: const Text(
                               'Forgot Password?',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          const SizedBox(width: 10), // Add space between buttons
+                          const SizedBox(width: 10),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },
                             child: const Text(
                               'Register',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ],
