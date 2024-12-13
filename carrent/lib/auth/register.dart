@@ -27,12 +27,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: Stack(
         children: [
+          Positioned(
+            top: 10, // Adjust position
+            right: 30,
+            child:
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/login.jpg'),
+                  image: AssetImage("assets/images/login.png"), 
                 fit: BoxFit.cover,
               ),
+              
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20), // Rounded corners
+                ),
               boxShadow: [
                 BoxShadow(
                   color: Color.fromARGB(66, 192, 200, 120),
@@ -41,6 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 )
               ]
             ),
+          ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
