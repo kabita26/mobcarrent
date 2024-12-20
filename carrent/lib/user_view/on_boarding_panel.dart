@@ -1,3 +1,4 @@
+import 'package:carrent/auth/login.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -14,24 +15,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<Map<String, String>> _onboardingData = [
     {
       "title": "Welcome to Car Rental",
-      "description": "Your trusted platform for flexible and easy vehicle rentals.",
-      "image": "assets/images/car_rental-pana.png", // Replace with actual image path
+      "description":
+          "Your trusted platform for flexible and easy vehicle rentals.",
+      "image":
+          "assets/images/car_rental-pana.png", // Replace with actual image path
     },
     {
       "title": "Explore Features",
-      "description": "Search, compare, and book vehicles seamlessly from anywhere.",
-      "image": "assets/images/city_driver_bro.png", // Replace with actual image path
+      "description":
+          "Search, compare, and book vehicles seamlessly from anywhere.",
+      "image":
+          "assets/images/city_driver_bro.png", // Replace with actual image path
     },
     {
       "title": "Get Started Now",
-      "description": "Sign up or log in to experience the ultimate car rental service.",
-      "image": "assets/images/city_driver_pana.png", // Replace with actual image path
+      "description":
+          "Sign up or log in to experience the ultimate car rental service.",
+      "image":
+          "assets/images/city_driver_pana.png", // Replace with actual image path
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+            child: const Text(
+          'FleetRider',
+          style: TextStyle(fontFamily: "Montserrat Bold"),
+        )),
+        backgroundColor: const Color.fromARGB(255, 232, 230, 229),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -48,11 +63,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Make the image fully visible without cropping
                     Image.asset(
                       data["image"]!,
-                      height: 300,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context)
+                          .size
+                          .width, // Full width of the screen
+                      height: MediaQuery.of(context).size.height *
+                          0.4, // 40% of screen height
+                      fit: BoxFit
+                          .contain, // Ensures the entire image fits without cropping
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -89,7 +109,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: ElevatedButton(
               onPressed: _currentPage == _onboardingData.length - 1
                   ? () {
-                      Navigator.pushReplacementNamed(context, '/login');
+                      // Navigate to the login screen when the user is on the last page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                      );
                     }
                   : () {
                       _pageController.nextPage(
