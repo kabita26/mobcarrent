@@ -40,16 +40,17 @@ _initApiService() {
 
 _initRegisterDependencies() {
   // init local data source
-  getIt.registerLazySingleton(
+  // =========================== Data Source ===========================
+
+  getIt.registerLazySingleton<AuthLocalDatasource>(
     () => AuthLocalDatasource(getIt<HiveService>()),
   );
 
-  // init remote data source
-  getIt.registerFactory<AuthRemoteDataSource>(
-    () => AuthRemoteDataSource(
-      getIt<Dio>(),
-    ),
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSource(getIt<Dio>()),
   );
+
+  // =========================== Repository ===========================
 
   // init local repository
   getIt.registerLazySingleton(
@@ -70,11 +71,15 @@ _initRegisterDependencies() {
   //     getIt<AuthLocalRepository>(),
   //   ),
   // );
+
+  // =========================== Usecases ===========================
+
   getIt.registerLazySingleton<RegisterUserUsecase>(
     () => RegisterUserUsecase(
       getIt<AuthRemoteRepository>(),
     ),
   );
+ 
 
   getIt.registerFactory<RegisterBloc>(
     () => RegisterBloc(
@@ -83,6 +88,7 @@ _initRegisterDependencies() {
     ),
   );
 }
+// =========================== Data Source ===========================
 
 _initHomeDependencies() async {
   getIt.registerFactory<HomeCubit>(
@@ -115,5 +121,5 @@ _initLoginDependencies() async {
 _initSplashScreenDependencies() async {
   getIt.registerFactory<SplashScreenCubit>(
     () => SplashScreenCubit(getIt<LoginBloc>()),
-);
+  );
 }
