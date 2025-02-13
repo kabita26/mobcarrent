@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "carrent",
+			"path": "../.."
+		},
+		{
+			"name": "coverage",
+			"path": "../../../../../Downloads/flutter_testing/flutter_testing/coverage"
+		}
+	],
+	"settings": {}
+}
