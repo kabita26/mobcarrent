@@ -1,31 +1,45 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:car_rent/app/di/di.dart';
-import 'package:car_rent/features/auth/presentation/view/login_view.dart';
-import 'package:car_rent/features/auth/presentation/view_model/login/login_bloc.dart';
-import 'package:car_rent/features/home/presentation/view_model/home_state.dart';
+import 'package:bloc/bloc.dart';
+import '../../domain/entities/car.dart';
+import '../../domain/use_case/get_car_listings.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeState.initial());
+class HomeState {
+  final List<Car> cars;
+  final bool isLoading;
+  final String error;
 
-  void onTabTapped(int index) {
-    emit(state.copyWith(selectedIndex: index));
+  HomeState({
+    required this.cars,
+    required this.isLoading,
+    required this.error,
+  });
+
+  factory HomeState.initial() {
+    return HomeState(cars: [], isLoading: false, error: '');
   }
 
-  void logout(BuildContext context) {
-    // Wait for 2 seconds
-    Future.delayed(const Duration(seconds: 2), () async {
-      if (context.mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-              value: getIt<LoginBloc>(),
-              child: LoginView(),
-            ),
-          ),
-        );
-      }
-    });
+  HomeState copyWith({List<Car>? cars, bool? isLoading, String? error}) {
+    return HomeState(
+      cars: cars ?? this.cars,
+      isLoading: isLoading ?? this.isLoading,
+      error: error ?? this.error,
+    );
+  }
+}
+
+class HomeCubit extends Cubit<HomeState> {
+  final GetCarListings getCarListings;
+
+  HomeCubit(this.getCarListings) : super(HomeState.initial());
+
+  Future<void> fetchCars() async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final cars = await getCarListings();
+      print("Fetched ${cars.length} cars");
+      emit(state.copyWith(cars: cars, isLoading: false));
+    } catch (e) {
+      print("Error fetching cars: $e");
+      emit(state.copyWith(error: e.toString(), isLoading: false));
+    }
   }
 }
