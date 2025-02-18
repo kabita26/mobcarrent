@@ -19,7 +19,6 @@ import 'package:car_rent/features/splash/presentation/view_model/splash_screen_c
 // Home Dependencies
 import 'package:car_rent/features/home/data/datasource/car_remote_data_source.dart';
 import 'package:car_rent/features/home/data/repositories/car_repository_impl.dart';
-import 'package:car_rent/features/home/domain/repositories/car_repository.dart';
 import 'package:car_rent/features/home/domain/use_case/get_car_listings.dart';
 import 'package:car_rent/features/home/domain/use_case/get_wishlist.dart';
 import 'package:car_rent/features/home/domain/use_case/get_bookings.dart';
