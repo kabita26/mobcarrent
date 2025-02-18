@@ -1,4 +1,8 @@
 
+import 'package:car_rent/app/constants/api_end_point.dart';
+import 'package:car_rent/features/home/data/model/car_model.dart';
+import 'package:dio/dio.dart';
+
 abstract class CarRemoteDataSource {
   Future<List<CarModel>> fetchCarListings();
   Future<List<CarModel>> fetchWishlist();

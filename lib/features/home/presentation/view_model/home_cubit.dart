@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:car_rent/features/home/domain/entity/car.dart';
 import '../../domain/use_case/get_car_listings.dart';
 
 class HomeState {

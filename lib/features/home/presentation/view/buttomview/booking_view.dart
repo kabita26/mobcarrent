@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../view_model/booking_cubit.dart';
+import '../../view_model/booking_cubit.dart';
 
 class BookingView extends StatefulWidget {
   const BookingView({Key? key}) : super(key: key);

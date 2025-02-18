@@ -1,6 +1,6 @@
+import 'package:car_rent/features/home/presentation/view_model/search_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../view_model/search_cubit.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);

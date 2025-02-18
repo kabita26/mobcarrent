@@ -1,4 +1,6 @@
 
+import 'package:car_rent/features/home/domain/entity/car.dart';
+
 abstract class CarRepository {
   Future<List<Car>> getCarListings();
   Future<List<Car>> getWishlist();

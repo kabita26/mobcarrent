@@ -1,6 +1,7 @@
-import '../../domain/entities/car.dart';
-import '../../domain/repositories/car_repository.dart';
-import '../datasource/car_remote_data_source.dart';
+import 'package:car_rent/features/home/data/data_source/car_remote_data_source.dart';
+import 'package:car_rent/features/home/domain/entity/car.dart';
+import 'package:car_rent/features/home/domain/repository/car_repository.dart';
+
 
 class CarRepositoryImpl implements CarRepository {
   final CarRemoteDataSource remoteDataSource;

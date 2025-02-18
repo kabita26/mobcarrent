@@ -1,5 +1,5 @@
+import 'package:car_rent/features/home/domain/entity/car.dart';
 import 'package:flutter/material.dart';
-import '../../../domain/entities/car.dart';
 
 class CarDetailView extends StatelessWidget {
   final Car car;
@@ -10,6 +10,18 @@ class CarDetailView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('${car.brand} ${car.model}'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite_border),
+            onPressed: () {
+              // Add car to wishlist logic goes here.
+              // For demonstration, we show a snackbar.
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Car added to wishlist")),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,9 +38,22 @@ class CarDetailView extends StatelessWidget {
             Text('Year: ${car.year}'),
             Text('Price: \$${car.regularPrice.toStringAsFixed(2)}'),
             const SizedBox(height: 8),
-            Text(car.description.isNotEmpty 
-              ? car.description 
-              : 'No description available.'),
+            Text(
+              car.description.isNotEmpty 
+                ? car.description 
+                : 'No description available.',
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                // Book now functionality goes here.
+                // For demonstration, we show a snackbar.
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Booking confirmed")),
+                );
+              },
+              child: const Text("Book Now"),
+            ),
           ],
         ),
       ),

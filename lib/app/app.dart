@@ -17,6 +17,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => getIt<SplashScreenCubit>()),
           BlocProvider(create: (_) => getIt<LoginBloc>()),
           BlocProvider(create: (_) => getIt<RegisterBloc>()),
+           BlocProvider<HomeCubit>(create: (_) => getIt<HomeCubit>()),
+        BlocProvider<WishlistCubit>(create: (_) => getIt<WishlistCubit>()),
+        BlocProvider<BookingCubit>(create: (_) => getIt<BookingCubit>()),
+        BlocProvider<SearchCubit>(create: (_) => getIt<SearchCubit>()),
+        
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

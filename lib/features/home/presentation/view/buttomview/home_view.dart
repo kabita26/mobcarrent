@@ -1,6 +1,6 @@
+import 'package:car_rent/features/home/presentation/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../view_model/home_cubit.dart';
 import 'car_detail_view.dart';
 
 class HomeView extends StatefulWidget {

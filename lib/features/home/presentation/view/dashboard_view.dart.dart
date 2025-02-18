@@ -1,4 +1,9 @@
-
+import 'package:car_rent/features/home/presentation/view/buttomview/booking_view.dart';
+import 'package:car_rent/features/home/presentation/view/buttomview/home_view.dart';
+import 'package:car_rent/features/home/presentation/view/buttomview/search_view.dart';
+import 'package:car_rent/features/home/presentation/view/buttomview/wishlist_view.dart';
+import 'package:car_rent/view/profileview.dart';
+import 'package:flutter/material.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
@@ -13,7 +18,7 @@ class _DashboardViewState extends State<DashboardView> {
     HomeView(),
     BookingView(),
     WishlistView(),
-    ProfileView(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -32,13 +37,10 @@ class _DashboardViewState extends State<DashboardView> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // Navigate to SearchView with its cubit provided.
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => Navigator.of(context).widget, // fallback to current widget tree
-                  // Or use a dedicated provider:
-                  builder: (context) => SearchView(),
+                  builder: (context) => const SearchView(),
                 ),
               );
             },
