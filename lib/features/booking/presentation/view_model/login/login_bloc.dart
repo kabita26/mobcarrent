@@ -1,6 +1,6 @@
 import 'package:car_rent/core/common/snackbar/my_snackbar.dart';
 import 'package:car_rent/features/auth/domain/use_case/login_usecase.dart';
-import 'package:car_rent/features/home/presentation/view/dashboard_view.dart';
+import 'package:car_rent/features/home/presentation/view/dashboard_view.dart.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
