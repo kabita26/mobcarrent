@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/car.dart';
+import '../../../domain/entities/car.dart';
 
 class CarDetailView extends StatelessWidget {
   final Car car;
