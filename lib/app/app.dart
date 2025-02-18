@@ -1,6 +1,7 @@
 import 'package:car_rent/core/theme/app_theme.dart';
 import 'package:car_rent/features/auth/presentation/view_model/login/login_bloc.dart';
 import 'package:car_rent/features/auth/presentation/view_model/signup/register_bloc.dart';
+import 'package:car_rent/features/home/presentation/view_model/booking_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/home_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/wishlist_cubit.dart';
 import 'package:car_rent/features/splash/presentation/view/splash_view.dart';
