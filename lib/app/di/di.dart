@@ -1,3 +1,4 @@
+import 'package:car_rent/features/home/data/data_source/car_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,8 +18,6 @@ import 'package:car_rent/features/auth/presentation/view_model/signup/register_b
 import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
 
 // Home Dependencies
-import 'package:car_rent/features/home/data/datasource/car_remote_data_source.dart';
-import 'package:car_rent/features/home/data/repositories/car_repository_impl.dart';
 import 'package:car_rent/features/home/domain/use_case/get_car_listings.dart';
 import 'package:car_rent/features/home/domain/use_case/get_wishlist.dart';
 import 'package:car_rent/features/home/domain/use_case/get_bookings.dart';
