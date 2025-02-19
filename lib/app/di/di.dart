@@ -1,5 +1,7 @@
+import 'package:car_rent/core/network/api_server.dart';
 import 'package:car_rent/features/home/data/data_source/car_remote_data_source.dart';
 import 'package:car_rent/features/home/data/repository/car_repository_impl.dart';
+import 'package:car_rent/features/home/domain/repository/car_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
