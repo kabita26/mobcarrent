@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:car_rent/features/auth/presentation/view_model/signup/register_bloc.dart';
+import 'package:car_rent/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +17,7 @@ class _RegisterViewState extends State<RegisterView> {
   final _gap = const SizedBox(height: 16);
   final _key = GlobalKey<FormState>();
 
-  // TextEditingControllers for password and confirm password
+  // TextEditingControllers for input fields
   final _emailController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -25,34 +25,26 @@ class _RegisterViewState extends State<RegisterView> {
 
   // Image picker logic
   File? _img;
-
-  // Handle Camera Permission Request
-  Future<void> checkCameraPermission() async {
-    final status = await Permission.camera.request();
-    if (status.isDenied || status.isRestricted) {
-      await Permission.camera.request();
-    }
-  }
-
-  // Function to browse image (Camera or Gallery)
   Future _browseImage(ImageSource imageSource) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSource);
       if (image != null) {
         setState(() {
           _img = File(image.path);
-          context.read<RegisterBloc>().add(
-                LoadImage(file: _img!),
-              );
+          // Send image to server
+          context.read<RegisterBloc>().add(UploadImage(file: _img!));
         });
-      } else {
-        debugPrint("No image selected.");
       }
     } catch (e) {
-      debugPrint("Error picking image: ${e.toString()}");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error picking image: ${e.toString()}')),
-      );
+      debugPrint(e.toString());
+    }
+  }
+
+  // Handle Camera Permission Request
+  Future<void> checkCameraPermission() async {
+    if (await Permission.camera.request().isRestricted ||
+        await Permission.camera.request().isDenied) {
+      await Permission.camera.request();
     }
   }
 
@@ -60,7 +52,10 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register User', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        title: const Text(
+          'Register User',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 8, 45, 109),
       ),
@@ -81,7 +76,8 @@ class _RegisterViewState extends State<RegisterView> {
                         context: context,
                         isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
                         ),
                         builder: (context) => Padding(
                           padding: const EdgeInsets.all(20),
@@ -94,18 +90,24 @@ class _RegisterViewState extends State<RegisterView> {
                                   _browseImage(ImageSource.camera);
                                   Navigator.pop(context);
                                 },
-                                icon: const Icon(Icons.camera, color: Colors.white),
+                                icon: const Icon(Icons.camera,
+                                    color: Colors.white),
                                 label: const Text('Camera'),
-                                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 8, 45, 109)),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 8, 45, 109)),
                               ),
                               ElevatedButton.icon(
                                 onPressed: () {
                                   _browseImage(ImageSource.gallery);
                                   Navigator.pop(context);
                                 },
-                                icon: const Icon(Icons.image, color: Colors.white),
+                                icon: const Icon(Icons.image,
+                                    color: Colors.white),
                                 label: const Text('Gallery'),
-                                style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 8, 45, 109)),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 8, 45, 109)),
                               ),
                             ],
                           ),
@@ -113,110 +115,64 @@ class _RegisterViewState extends State<RegisterView> {
                       );
                     },
                     child: SizedBox(
-                      height: 200,
-                      width: 200,
+                      height: 120,
+                      width: 120,
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage: _img != null
                             ? FileImage(_img!)
-                            : const AssetImage('assets/images/logo.png') as ImageProvider,
+                            : const AssetImage('assets/images/logo.png')
+                                as ImageProvider,
                       ),
                     ),
                   ),
                   _gap,
 
                   // Email Input
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white,
-                      border: Border.all(color: const Color.fromARGB(255, 8, 45, 109)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: TextFormField(
+                  _buildTextField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Email',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 8, 45, 109)),
-                      ),
+                      labelText: 'Email',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter email';
                         }
                         return null;
-                      },
-                    ),
-                  ),
+                      }),
+
                   _gap,
 
                   // Username Input
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white,
-                      border: Border.all(color: const Color.fromARGB(255, 8, 45, 109)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: TextFormField(
+                  _buildTextField(
                       controller: _usernameController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Username',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 8, 45, 109)),
-                      ),
+                      labelText: 'Username',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter username';
                         }
                         return null;
-                      },
-                    ),
-                  ),
+                      }),
+
                   _gap,
 
                   // Password Input
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white,
-                      border: Border.all(color: const Color.fromARGB(255, 8, 45, 109)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: TextFormField(
+                  _buildTextField(
                       controller: _passwordController,
+                      labelText: 'Password',
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Password',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 8, 45, 109)),
-                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter password';
                         }
                         return null;
-                      },
-                    ),
-                  ),
+                      }),
+
                   _gap,
 
                   // Confirm Password Input
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white,
-                      border: Border.all(color: const Color.fromARGB(255, 8, 45, 109)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: TextFormField(
+                  _buildTextField(
                       controller: _confirmPasswordController,
+                      labelText: 'Confirm Password',
                       obscureText: true,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Confirm Password',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 8, 45, 109)),
-                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter confirm password';
@@ -225,16 +181,16 @@ class _RegisterViewState extends State<RegisterView> {
                           return 'Passwords do not match';
                         }
                         return null;
-                      },
-                    ),
-                  ),
+                      }),
+
                   _gap,
 
                   // Register Button
                   ElevatedButton(
                     onPressed: () {
                       if (_key.currentState!.validate()) {
-                        final registerState = context.read<RegisterBloc>().state;
+                        final registerState =
+                            context.read<RegisterBloc>().state;
                         final imageName = registerState.imageName;
                         context.read<RegisterBloc>().add(
                               RegisterUser(
@@ -254,23 +210,27 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     child: const Text(
                       'Register',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white),
                     ),
                   ),
                   _gap,
 
-                  // Sign In Button
-                  ElevatedButton(
+                  // Navigate to Login Page Button
+                  TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signin');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginView()),
+                      );
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 8, 45, 109),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                    ),
                     child: const Text(
-                      'Sign In',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Inter', color: Colors.white),
+                      'Already have an account? Sign In',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 8, 45, 109)),
                     ),
                   ),
                 ],
@@ -278,6 +238,34 @@ class _RegisterViewState extends State<RegisterView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // Reusable text field widget
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    String? Function(String?)? validator,
+    bool obscureText = false,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        border: Border.all(color: const Color.fromARGB(255, 8, 45, 109)),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: labelText,
+          labelStyle: const TextStyle(
+              fontWeight: FontWeight.bold, color: Color.fromARGB(255, 8, 45, 109)),
+        ),
+        validator: validator,
       ),
     );
   }

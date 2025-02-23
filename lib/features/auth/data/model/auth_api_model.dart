@@ -15,7 +15,7 @@ class AuthApiModel extends Equatable {
   const AuthApiModel({
     this.id,
     required this.email,
-    this.image,
+    required this.image,
     required this.username,
     required this.password,
   });

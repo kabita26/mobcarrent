@@ -30,8 +30,7 @@ class RegisterUserParams extends Equatable {
   List<Object?> get props => [username, email, password ];
 }
 
-class RegisterUserUsecase
-    implements UsecaseWithParams<void, RegisterUserParams> {
+class RegisterUserUsecase implements UsecaseWithParams<void, RegisterUserParams> {
   final IAuthRepository repository;
 
   RegisterUserUsecase(this.repository);

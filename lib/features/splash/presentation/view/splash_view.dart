@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SplashScreenCubit, SplashScreenState>(
