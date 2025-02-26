@@ -1,7 +1,7 @@
 import 'package:car_rent/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
+import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
