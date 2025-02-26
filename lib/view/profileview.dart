@@ -1,5 +1,5 @@
 import 'package:car_rent/core/common/snackbar/my_snackbar.dart';
-import 'package:car_rent/features/home/presentation/view_model/home_cubit.dart';
+import 'package:car_rent/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,33 +66,34 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
 
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.logout),
-                  onPressed: () {
-                    // Logout code
-                    showMySnackBar(
-                      context: context,
-                      message: 'Logging out...',
-                      color: Colors.red,
-                    );
-
-                    // context.read<HomeCubit>().logout(context);
-                  },
-                ),
-                const Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Logout'),
+              onTap: () {
+                _handleLogout(context);
+              },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _handleLogout(BuildContext context) {
+    // Show Snackbar
+    showMySnackBar(
+      context: context,
+      message: 'Logging out...',
+      color: Colors.red,
+    );
+
+    // Navigate to Login Screen and remove all previous screens from stack
+    Future.delayed(const Duration(seconds: 1), () {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginView()),
+        (route) => false, // Removes all previous routes
+      );
+    });
   }
 }

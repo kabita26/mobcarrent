@@ -2,12 +2,9 @@ import 'package:car_rent/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 
 class OnboardView extends StatelessWidget {
-  OnboardView({super.key});
+  const OnboardView({super.key});
 
-  final PageController _pageController = PageController();
-  final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
-
-  final List<Map<String, String>> _onboardingData = [
+  final List<Map<String, String>> _onboardingData = const [
     {
       "image": 'assets/images/Car-rental-cuate.png',
       "title": 'Welcome to the Car Rent App!',
@@ -25,49 +22,55 @@ class OnboardView extends StatelessWidget {
     }
   ];
 
-  void _nextPage(BuildContext context) {
-    if (_currentPageNotifier.value < _onboardingData.length - 1) {
-      _pageController.nextPage(
+  @override
+  Widget build(BuildContext context) {
+    PageController pageController = PageController();
+    ValueNotifier<int> currentPageNotifier = ValueNotifier<int>(0);
+
+    void nextPage() {
+      if (currentPageNotifier.value < _onboardingData.length - 1) {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginView()),
+        );
+      }
+    }
+
+    void goToPage(int index) {
+      pageController.animateToPage(
+        index,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-    } else {
+    }
+
+    void skipOnboarding() {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginView()),
       );
     }
-  }
 
-  void _goToPage(int index) {
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           PageView.builder(
-            controller: _pageController,
-            onPageChanged: (index) => _currentPageNotifier.value = index,
+            controller: pageController,
+            onPageChanged: (index) => currentPageNotifier.value = index,
             itemCount: _onboardingData.length,
             itemBuilder: (context, index) {
               return Column(
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(_onboardingData[index]["image"]!),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+                    child: Image.asset(
+                      _onboardingData[index]["image"]!,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   Expanded(
@@ -106,20 +109,35 @@ class OnboardView extends StatelessWidget {
             },
           ),
           Positioned(
+            top: 50,
+            right: 20,
+            child: GestureDetector(
+              onTap: skipOnboarding,
+              child: const Text(
+                "Skip",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue, // Change color if needed
+                ),
+              ),
+            ),
+          ),
+          Positioned(
             bottom: 20,
             left: 0,
             right: 0,
             child: Column(
               children: [
                 ValueListenableBuilder<int>(
-                  valueListenable: _currentPageNotifier,
+                  valueListenable: currentPageNotifier,
                   builder: (context, currentPage, child) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         _onboardingData.length,
                         (index) => GestureDetector(
-                          onTap: () => _goToPage(index),
+                          onTap: () => goToPage(index),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -128,7 +146,7 @@ class OnboardView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: currentPage == index
                                   ? Colors.blue
-                                  : const Color.fromARGB(255, 241, 239, 239),
+                                  : Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
@@ -139,13 +157,16 @@ class OnboardView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => _nextPage(context),
+                  onPressed: nextPage,
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 15),
+                    backgroundColor: Colors.blue, // Adjust color to match theme
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   child: ValueListenableBuilder<int>(
-                    valueListenable: _currentPageNotifier,
+                    valueListenable: currentPageNotifier,
                     builder: (context, currentPage, child) {
                       return Text(
                         currentPage == _onboardingData.length - 1
