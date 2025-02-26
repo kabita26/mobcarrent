@@ -1,7 +1,6 @@
 import 'package:car_rent/core/common/snackbar/my_snackbar.dart';
 import 'package:car_rent/features/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
