@@ -5,7 +5,6 @@ import 'package:car_rent/features/home/presentation/view_model/booking_cubit.dar
 import 'package:car_rent/features/home/presentation/view_model/home_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/search_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/wishlist_cubit.dart';
-import 'package:car_rent/features/splash/presentation/view/splash_view.dart';
 import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
 import 'package:car_rent/view/onboardview.dart';
 import 'package:flutter/material.dart';
