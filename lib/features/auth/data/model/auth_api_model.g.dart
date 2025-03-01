@@ -11,7 +11,7 @@ AuthApiModel _$AuthApiModelFromJson(Map<String, dynamic> json) => AuthApiModel(
       email: json['email'] as String,
       image: json['image'] as String?,
       username: json['username'] as String,
-      password: json['password'] as String,
+      password: json['password'] as String?,
     );
 
 Map<String, dynamic> _$AuthApiModelToJson(AuthApiModel instance) =>

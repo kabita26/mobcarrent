@@ -1,6 +1,7 @@
 import 'package:car_rent/features/home/presentation/view_model/search_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'car_detail_view.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({Key? key}) : super(key: key);
@@ -15,9 +16,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search Cars'),
-      ),
+      appBar: AppBar(title: const Text('Search Cars')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -27,9 +26,7 @@ class _SearchViewState extends State<SearchView> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter search query...',
-                    ),
+                    decoration: const InputDecoration(hintText: 'Enter search query...'),
                   ),
                 ),
                 IconButton(
@@ -62,17 +59,12 @@ class _SearchViewState extends State<SearchView> {
                         margin: const EdgeInsets.all(8.0),
                         child: ListTile(
                           leading: car.imageUrls.isNotEmpty
-                              ? Image.network(
-                                  car.imageUrls.first,
-                                  width: 50,
-                                  height: 50,
-                                  fit: BoxFit.cover,
-                                )
+                              ? Image.network(car.imageUrls.first, width: 50, height: 50, fit: BoxFit.cover)
                               : const Icon(Icons.directions_car),
                           title: Text('${car.brand} ${car.model}'),
                           subtitle: Text('\$${car.regularPrice.toStringAsFixed(2)}'),
                           onTap: () {
-                            // Optionally, navigate to car detail.
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => CarDetailView(car: car)));
                           },
                         ),
                       );

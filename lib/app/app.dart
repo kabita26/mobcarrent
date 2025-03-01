@@ -4,7 +4,7 @@ import 'package:car_rent/features/auth/presentation/view_model/signup/register_b
 import 'package:car_rent/features/home/presentation/view_model/booking_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/home_cubit.dart';
 import 'package:car_rent/features/home/presentation/view_model/search_cubit.dart';
-import 'package:car_rent/features/home/presentation/view_model/wishlist_cubit.dart';
+import 'package:car_rent/features/wishlist/presentation/view_model/wishlist_bloc.dart';
 import 'package:car_rent/features/splash/presentation/view_model/splash_screen_cubit.dart';
 import 'package:car_rent/view/onboardview.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<LoginBloc>()),
         BlocProvider(create: (_) => getIt<RegisterBloc>()),
         BlocProvider(create: (_) => getIt<HomeCubit>()),
-        BlocProvider(create: (_) => getIt<WishlistCubit>()),
+        BlocProvider(create: (_) => getIt<WishlistBloc>()),
         BlocProvider(create: (_) => getIt<BookingCubit>()),
         BlocProvider(create: (_) => getIt<SearchCubit>()),
       ],

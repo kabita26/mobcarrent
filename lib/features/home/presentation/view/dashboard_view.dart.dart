@@ -1,7 +1,7 @@
 import 'package:car_rent/features/home/presentation/view/buttomview/booking_view.dart';
 import 'package:car_rent/features/home/presentation/view/buttomview/home_view.dart';
 import 'package:car_rent/features/home/presentation/view/buttomview/search_view.dart';
-import 'package:car_rent/features/home/presentation/view/buttomview/wishlist_view.dart';
+import 'package:car_rent/features/wishlist/presentation/view/wishlist_view.dart';
 import 'package:car_rent/view/profileview.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +14,12 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   int _selectedIndex = 0;
-  final List<Widget> _screens = const [
-    HomeView(),
-    BookingView(),
-    WishlistView(),
-    ProfileScreen(),
+
+  final List<Widget> _screens = [
+    const HomeView(),
+    const BookingView(),
+    WishlistPage(), // Removed `const` because WishlistPage() is not constant
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -26,7 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
       _selectedIndex = index;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

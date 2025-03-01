@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_rent/features/home/domain/entity/car.dart';
-import '../../domain/use_case/search_cars.dart';
 
 class SearchState {
   final List<Car> results;
@@ -27,15 +26,21 @@ class SearchState {
 }
 
 class SearchCubit extends Cubit<SearchState> {
-  final GetSearchResults getSearchResults;
+  final List<Car> allCars; // Store fetched cars from HomeCubit
 
-  SearchCubit(this.getSearchResults) : super(SearchState.initial());
+  SearchCubit(this.allCars) : super(SearchState.initial());
 
-  Future<void> search(String query) async {
+  void search(String query) {
     emit(state.copyWith(isLoading: true));
+
     try {
-      final results = await getSearchResults(query);
-      emit(state.copyWith(results: results, isLoading: false));
+      final filteredResults = allCars
+          .where((car) =>
+              car.brand.toLowerCase().contains(query.toLowerCase()) ||
+              car.model.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+
+      emit(state.copyWith(results: filteredResults, isLoading: false));
     } catch (e) {
       emit(state.copyWith(error: e.toString(), isLoading: false));
     }
